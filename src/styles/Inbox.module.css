@@ -1,0 +1,15 @@
+.subjectFont {
+  @apply font-lato font-bold text-[#2F80ED] text-base break-words;
+}
+.senderTextStyle {
+  @apply font-lato font-bold text-sm text-[#9B51E0];
+}
+.participantFont {
+  @apply font-lato text-[#4F4F4F] text-sm;
+}
+.conversationText {
+  @apply font-lato  text-sm text-[#4F4F4F];
+}
+.conversationTime {
+  @apply font-lato  text-xs text-[#4F4F4F];
+}

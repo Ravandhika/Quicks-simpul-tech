@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
-import QuickInbox from "./quick-inbox";
+import QuickInbox from "../pages/messages/quick-inbox";
 import QuickHome from "./quick-home";
 import QuickTask from "./quick-task";
 
@@ -10,44 +10,42 @@ export default function PopUpQuicks() {
 
   const changeActivatedHome = () => {
     setActivatedButton(0);
-    console.log("test ", activatedButton);
   };
 
   const changeActivatedInbox = () => {
     setActivatedButton(1);
-    console.log("test ", activatedButton);
   };
   const changeActivatedTask = () => {
     setActivatedButton(2);
   };
 
   const activatedType = () => {
-    if (activatedButton == 0) {
-      return (
-        <QuickHome
-          handleActivatedInbox={changeActivatedInbox}
-          handleActivatedTask={changeActivatedTask}
-        />
-      );
-    }
-    if (activatedButton == 1) {
-      return (
-        <QuickInbox
-          handleActivatedHome={changeActivatedHome}
-          handleActivatedInbox={changeActivatedInbox}
-          handleActivatedTask={changeActivatedTask}
-        />
-      );
-    }
-    if (activatedButton == 2) {
-      return (
-        <QuickTask
-          handleActivatedHome={changeActivatedHome}
-          handleActivatedInbox={changeActivatedInbox}
-          handleActivatedTask={changeActivatedTask}
-        />
-      );
-    }
+    // if (activatedButton == 0) {
+    //   return (
+    //     <QuickHome
+    //       handleActivatedInbox={changeActivatedInbox}
+    //       handleActivatedTask={changeActivatedTask}
+    //     />
+    //   );
+    // }
+    // if (activatedButton == 1) {
+    //   return (
+    //     <QuickInbox
+    //       handleActivatedHome={changeActivatedHome}
+    //       handleActivatedInbox={changeActivatedInbox}
+    //       handleActivatedTask={changeActivatedTask}
+    //     />
+    //   );
+    // }
+    // if (activatedButton == 2) {
+    //   return (
+    //     <QuickTask
+    //       handleActivatedHome={changeActivatedHome}
+    //       handleActivatedInbox={changeActivatedInbox}
+    //       handleActivatedTask={changeActivatedTask}
+    //     />
+    //   );
+    // }
   };
   const show = useCallback(() => {
     setShowButton(!showButton);
@@ -66,7 +64,14 @@ export default function PopUpQuicks() {
           height={16}
         />
       </button>
-      {showButton ? activatedType() : <></>}
+      {showButton ? (
+        <QuickHome
+          handleActivatedInbox={changeActivatedInbox}
+          handleActivatedTask={changeActivatedTask}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 }
