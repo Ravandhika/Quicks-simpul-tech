@@ -1,10 +1,9 @@
-import { forwardRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "@/styles/Inbox.module.css";
 
-export const InboxHeader = forwardRef((props, ref) => {
-  const { subjectData, participant } = props;
+export const InboxHeader = (props) => {
+  const { subjectData } = props;
 
   return (
     <>
@@ -40,5 +39,5 @@ export const InboxHeader = forwardRef((props, ref) => {
       </div>
     </>
   );
-});
+};
 export default InboxHeader;

@@ -19,7 +19,6 @@ const MessageChannel = () => {
     router.query.firstParticipantName,
     router.query.secondParticipantName,
     router.query.firstConversation,
-    console.log(router.query.secondParticipantName),
   ]);
 
   return (

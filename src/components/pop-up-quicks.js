@@ -1,52 +1,9 @@
 import { useCallback, useState, useEffect } from "react";
 import Image from "next/image";
-import QuickInbox from "../pages/messages/quick-inbox";
 import QuickHome from "./quick-home";
-import QuickTask from "./quick-task";
 
 export default function PopUpQuicks() {
   const [showButton, setShowButton] = useState(false);
-  const [activatedButton, setActivatedButton] = useState(0);
-
-  const changeActivatedHome = () => {
-    setActivatedButton(0);
-  };
-
-  const changeActivatedInbox = () => {
-    setActivatedButton(1);
-  };
-  const changeActivatedTask = () => {
-    setActivatedButton(2);
-  };
-
-  const activatedType = () => {
-    // if (activatedButton == 0) {
-    //   return (
-    //     <QuickHome
-    //       handleActivatedInbox={changeActivatedInbox}
-    //       handleActivatedTask={changeActivatedTask}
-    //     />
-    //   );
-    // }
-    // if (activatedButton == 1) {
-    //   return (
-    //     <QuickInbox
-    //       handleActivatedHome={changeActivatedHome}
-    //       handleActivatedInbox={changeActivatedInbox}
-    //       handleActivatedTask={changeActivatedTask}
-    //     />
-    //   );
-    // }
-    // if (activatedButton == 2) {
-    //   return (
-    //     <QuickTask
-    //       handleActivatedHome={changeActivatedHome}
-    //       handleActivatedInbox={changeActivatedInbox}
-    //       handleActivatedTask={changeActivatedTask}
-    //     />
-    //   );
-    // }
-  };
   const show = useCallback(() => {
     setShowButton(!showButton);
   }, [showButton]);
@@ -64,14 +21,7 @@ export default function PopUpQuicks() {
           height={16}
         />
       </button>
-      {showButton ? (
-        <QuickHome
-          handleActivatedInbox={changeActivatedInbox}
-          handleActivatedTask={changeActivatedTask}
-        />
-      ) : (
-        <></>
-      )}
+      {showButton ? <QuickHome /> : <></>}
     </>
   );
 }
