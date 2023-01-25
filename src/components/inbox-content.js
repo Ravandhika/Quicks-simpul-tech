@@ -1,8 +1,9 @@
-import { forwardRef, useState, useRef, useEffect } from "react";
+import { forwardRef, useState, useRef, useEffect, Fragment } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "@/styles/Inbox.module.css";
 import moment from "moment/moment";
+import { Menu, Transition } from "@headlessui/react";
 
 export const InboxContents = (props) => {
   const {
@@ -88,14 +89,47 @@ export const InboxContents = (props) => {
         <div className="flex flex-col items-end justify-end  h-auto ">
           <h1 className={styles.senderTextStyle}>you</h1>
           <div className="flex flex-row items-start space-x-2">
-            <button>
-              <Image
-                src="/icons/more-horizontal-gray-icon.svg"
-                alt="people"
-                width={20}
-                height={20}
-              />
-            </button>
+            <Menu as="div" className="relative inline-block text-left">
+              <div>
+                <Menu.Button className="inline-flex justify-center w-full  py-2 text-sm font-medium text-[#]  rounded-md">
+                  <Image
+                    src="/icons/more-horizontal-gray-icon.svg"
+                    alt="people"
+                    width={20}
+                    height={20}
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95">
+                <Menu.Items className="absolute z-20 right-1 w-24  origin-top-right bg-white rounded-md border border-[#828282]">
+                  <div className="flex flex-col items-start justify-center">
+                    <Menu.Item>
+                      <button
+                        className={
+                          "block px-4 py-2 text-sm font-lato text-[#2F80ED] hover:text-[#295792] border-b border-[#BDBDBD] w-full "
+                        }>
+                        Edit
+                      </button>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <button
+                        className={
+                          "block px-4 py-2 text-sm font-lato text-[#EB5757] hover:text-[#884949] border-[#BDBDBD w-full"
+                        }>
+                        Delete
+                      </button>
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
             <div className="flex flex-col bg-[#EEDCFF] p-4 rounded-lg max-w-sm ">
               <h1 className={styles.conversationText}>
                 So I started to walk into the water. I won't lie to you boys,
@@ -122,14 +156,47 @@ export const InboxContents = (props) => {
                 {moment().subtract(4, "hours").format("HH:mm")}
               </h1>
             </div>
-            <button>
-              <Image
-                src="/icons/more-horizontal-gray-icon.svg"
-                alt="people"
-                width={20}
-                height={20}
-              />
-            </button>
+            <Menu as="div" className="relative inline-block text-left">
+              <div>
+                <Menu.Button className="inline-flex justify-center w-full  py-2 text-sm font-medium text-[#]  rounded-md">
+                  <Image
+                    src="/icons/more-horizontal-gray-icon.svg"
+                    alt="people"
+                    width={20}
+                    height={20}
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95">
+                <Menu.Items className="absolute z-20 -right-20 w-24  origin-top-right bg-white rounded-md border border-[#828282]">
+                  <div className="flex flex-col items-start justify-center">
+                    <Menu.Item>
+                      <button
+                        className={
+                          "block px-4 py-2 text-sm font-lato text-[#2F80ED] hover:text-[#295792] border-b border-[#BDBDBD] w-full "
+                        }>
+                        Edit
+                      </button>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <button
+                        className={
+                          "block px-4 py-2 text-sm font-lato text-[#EB5757] hover:text-[#884949] border-[#BDBDBD w-full"
+                        }>
+                        Delete
+                      </button>
+                    </Menu.Item>
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
           </div>
         </div>
         {loadingStates.updateMessage ? (
@@ -150,14 +217,47 @@ export const InboxContents = (props) => {
                     {moment().format("HH:mm")}
                   </h1>
                 </div>
-                <button>
-                  <Image
-                    src="/icons/more-horizontal-gray-icon.svg"
-                    alt="people"
-                    width={20}
-                    height={20}
-                  />
-                </button>
+                <Menu as="div" className="relative inline-block text-left">
+                  <div>
+                    <Menu.Button className="inline-flex justify-center w-full  py-2 text-sm font-medium text-[#]  rounded-md">
+                      <Image
+                        src="/icons/more-horizontal-gray-icon.svg"
+                        alt="people"
+                        width={20}
+                        height={20}
+                      />
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95">
+                    <Menu.Items className="absolute z-20 -right-20 w-24  origin-top-right bg-white rounded-md border border-[#828282]">
+                      <div className="flex flex-col items-start justify-center">
+                        <Menu.Item>
+                          <button
+                            className={
+                              "block px-4 py-2 text-sm font-lato text-[#2F80ED] hover:text-[#295792] border-b border-[#BDBDBD] w-full "
+                            }>
+                            Edit
+                          </button>
+                        </Menu.Item>
+                        <Menu.Item>
+                          <button
+                            className={
+                              "block px-4 py-2 text-sm font-lato text-[#EB5757] hover:text-[#884949] border-[#BDBDBD w-full"
+                            }>
+                            Delete
+                          </button>
+                        </Menu.Item>
+                      </div>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
               </div>
             </div>
           </>
@@ -171,33 +271,49 @@ export const InboxContents = (props) => {
                 key={id}
                 className="flex flex-col items-end justify-end  h-auto ">
                 <h1 className={styles.senderTextStyle}>you</h1>
+
                 <div className="flex flex-row items-start space-x-2">
-                  {loadingStates.showMoreMenu ? (
-                    <div className="relative">
-                      <div className="grid relative  grid-cols-1 divide-y-2  rounded-lg bg-white w-28 h-16 border-[1px] border-[#BDBDBD]">
-                        <button className="">
-                          <h1 className="font-lato text-base text-[#2F80ED]">
-                            Edit
-                          </h1>
-                        </button>
-                        <button className="">
-                          <h1 className="font-lato text-base text-[#EB5757]">
-                            Delete
-                          </h1>
-                        </button>
-                      </div>
+                  <Menu as="div" className="relative inline-block text-left">
+                    <div>
+                      <Menu.Button className="inline-flex justify-center w-full  py-2 text-sm font-medium text-[#]  rounded-md">
+                        <Image
+                          src="/icons/more-horizontal-gray-icon.svg"
+                          alt="people"
+                          width={20}
+                          height={20}
+                        />
+                      </Menu.Button>
                     </div>
-                  ) : (
-                    <></>
-                  )}
-                  <button onClick={handleClickMore}>
-                    <Image
-                      src="/icons/more-horizontal-gray-icon.svg"
-                      alt="people"
-                      width={20}
-                      height={20}
-                    />
-                  </button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95">
+                      <Menu.Items className="absolute z-20 right-1 w-24  origin-top-right bg-white rounded-md border border-[#828282]">
+                        <div className="flex flex-col items-start justify-center">
+                          <Menu.Item>
+                            <button
+                              className={
+                                "block px-4 py-2 text-sm font-lato text-[#2F80ED] hover:text-[#295792] border-b border-[#BDBDBD] w-full "
+                              }>
+                              Edit
+                            </button>
+                          </Menu.Item>
+                          <Menu.Item>
+                            <button
+                              className={
+                                "block px-4 py-2 text-sm font-lato text-[#EB5757] hover:text-[#884949] border-[#BDBDBD w-full"
+                              }>
+                              Delete
+                            </button>
+                          </Menu.Item>
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
                   <div className="flex flex-col bg-[#EEDCFF] p-4 rounded-lg max-w-sm ">
                     <h1 className={styles.conversationText}>{message}</h1>
                     <h1 className={styles.conversationTime}>
@@ -220,7 +336,7 @@ export const InboxContents = (props) => {
           <></>
         )} */}
 
-        <div className="flex flex-1 flex-row absolute bottom-0 w-full pb-[22px] px-8 space-x-4 ">
+        <div className="flex flex-1 flex-row absolute bottom-0 w-full pb-[22px] px-8 space-x-4 bg-white ">
           <div className="flex flex-col w-screen space-y-2">
             <div className="flex flex-col justify-center items-center space-y-2">
               {!loadingStates.newMessage ? (
@@ -255,9 +371,9 @@ export const InboxContents = (props) => {
                 <></>
               )}
             </div>
-            <div className="flex flex-row space-x-4">
+            <div className="flex flex-row space-x-4  z-20">
               <input
-                className="w-full bg-white text-[#4F4F4F] leading-tight focus:outline-none font-lato py-4 px-2 border-[#828282] border-2 rounded-lg"
+                className="w-full  text-[#4F4F4F] leading-tight focus:outline-none font-lato py-4 px-2 border-[#828282] border-2 rounded-lg"
                 id="search"
                 type="text"
                 value={inputMessage}

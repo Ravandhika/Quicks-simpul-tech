@@ -1,5 +1,12 @@
 import Image from "next/image";
-export default function SearchBarInbox() {
+export default function SearchBarInbox(props) {
+  const {
+    handleOnChanges,
+    values,
+    handleEnterKey,
+    handleOnFocus,
+    handleOnBlur,
+  } = props;
   return (
     <div className="flex justify-between rounded-lg items-center bg-white border-[1px] shadow-lg border-[##828282] h-10 w-full px-8">
       <input
@@ -7,6 +14,11 @@ export default function SearchBarInbox() {
         id="search"
         type="text"
         placeholder="Search"
+        onChange={handleOnChanges}
+        value={values}
+        onKeyDown={handleEnterKey}
+        onFocus={handleOnFocus}
+        onBlur={handleOnBlur}
       />
       <div className="">
         <Image

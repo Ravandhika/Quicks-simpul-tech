@@ -1,18 +1,43 @@
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import TodoHeader from "@/components/todo-header";
 import TodoTask from "@/components/todo-task";
+import TodoAddTask from "@/components/todo-add-task";
 
 export const QuickTodo = () => {
+  const toNewAddedTask = useRef(null);
   const [loading, setLoading] = useState(false);
   const [todoList, setTodoList] = useState([]);
   const todoAPI = "https://jsonplaceholder.typicode.com/users";
+  const [newTaskList, setNewTaskList] = useState([
+    {
+      taskName: "",
+      taskDesc: "",
+    },
+  ]);
+  const [newTaskInput, setNewTaskInput] = useState([]);
+  const [displayForm, setDisplayForm] = useState("");
+
+  useEffect(() => {
+    toNewAddedTask.current?.scrollIntoView();
+  }, [displayForm]);
 
   useEffect(() => {
     getTodo();
   }, []);
+
+  const openFormTask = () => {
+    setDisplayForm(!displayForm);
+    console.log(!displayForm);
+  };
+  const handleSaveNewTask = () => {
+    setNewTaskList((prevState) => [
+      ...prevState,
+      { taskName: "", taskDesc: "" },
+    ]);
+  };
 
   const getTodo = useCallback(() => {
     axios
@@ -27,7 +52,7 @@ export const QuickTodo = () => {
   return (
     <>
       <div className="fixed z-90 bottom-28 right-12 flex flex-col bg-white text-white text-base w-[650px] h-[600px] min-h-max py-6 px-8 mt-1 mb-1 rounded-lg overflow-y-auto ">
-        <TodoHeader />
+        <TodoHeader setDisplayForm={openFormTask} displayForm={displayForm} />
         <div>
           {!loading ? (
             <>
@@ -68,9 +93,18 @@ export const QuickTodo = () => {
                       taskName={todoData.company.bs}
                       taskTodo={todoData.company.catchPhrase}
                     />
+                    {/* <TodoAddTask /> */}
                   </div>
                 );
               })}
+              {!displayForm ? (
+                <>
+                  <TodoAddTask />
+                  <div ref={toNewAddedTask} />
+                </>
+              ) : (
+                <></>
+              )}
             </>
           )}
         </div>

@@ -1,19 +1,17 @@
-import Link from "next/link";
-import Image from "next/image";
-import styles from "@/styles/Inbox.module.css";
+import { useState, useEffect } from "react";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import cn from "@/utils/cn";
 
 export const TodoHeader = (props) => {
-  const { subjectData } = props;
+  useEffect(() => {
+    props.setDisplayForm(true);
+    console.log(props.setDisplayForm(true));
+  }, []);
 
   return (
     <>
-      <div className="flex justify-between justify-items-start   space-x-4  border-[#BDBDBD] ">
+      <div className="flex justify-between justify-items-start  space-x-4  border-[#BDBDBD] ">
         <div className="flex items-center justify-start mx-8">
           <Menu as="div" className="relative inline-block text-left">
             <div>
@@ -46,28 +44,22 @@ export const TodoHeader = (props) => {
               <Menu.Items className="absolute  -left-9 w-56 mt-2 origin-center bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1 border-[1px] border-[#828282] rounded-lg">
                   <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active ? " text-gray-900" : "text-[#4F4F4F]",
-                          "block px-4 py-2 text-sm font-lato border-b-[1px] border-[#828282]"
-                        )}>
-                        Personal Errands
-                      </a>
-                    )}
+                    <a
+                      href="#"
+                      className={
+                        "block px-4 py-2 text-sm font-lato border-b-[1px] text-[#4F4F4F] border-[#828282] hover:text-[#2b2525]"
+                      }>
+                      Personal Errands
+                    </a>
                   </Menu.Item>
                   <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={classNames(
-                          active ? " text-gray-900" : "text-[#4F4F4F]",
-                          "block px-4 py-2 text-sm font-lato "
-                        )}>
-                        Urgent To-Do
-                      </a>
-                    )}
+                    <a
+                      href="#"
+                      className={
+                        "block px-4 py-2 text-sm font-lato text-[#4F4F4F] hover:text-[#2b2525]"
+                      }>
+                      Urgent To-Do
+                    </a>
                   </Menu.Item>
                 </div>
               </Menu.Items>
@@ -75,7 +67,9 @@ export const TodoHeader = (props) => {
           </Menu>
         </div>
         <div className="flex flex-1 items-center justify-end">
-          <button className="bg-[#2F80ED] px-4 py-2 rounded-lg">
+          <button
+            onClick={props.setDisplayForm}
+            className="bg-[#2F80ED] px-4 py-2 rounded-lg">
             <h1 className="text-sm font-lato font-bold">New Task</h1>
           </button>
         </div>

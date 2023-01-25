@@ -9,6 +9,7 @@ import moment from "moment/moment";
 export const QuickInbox = () => {
   const [loading, setLoading] = useState(false);
   const [messageList, setMessageList] = useState([]);
+  const [searchResult, setSearchResult] = useState("");
   const header = { "app-id": "63cc9675cdaa482288cd50da" };
   const messageAPI = "https://dummyapi.io/data/v1/post?limit=10";
 
@@ -16,12 +17,20 @@ export const QuickInbox = () => {
     getMessage();
   }, []);
 
+  const handleOnChangeSearch = (e) => {
+    setSearchResult(e.target.value);
+  };
+  // const searchFilter = (array) => {
+  //   return array.filter((el) => el.name.common.toLowerCase().includes(query));
+  // };
+
   const getMessage = useCallback(() => {
     const headers_ = { headers: header };
     axios
       .get(messageAPI, headers_)
       .then((res) => {
         setMessageList(res.data.data);
+        console.log(res.data.data);
         setLoading(true);
       })
       .catch((err) => console.log(err));
@@ -32,7 +41,10 @@ export const QuickInbox = () => {
       <div>
         <div className="fixed z-90 bottom-28 right-12 flex flex-col bg-white text-white text-base w-[650px] h-[600px] min-h-max py-6 px-8 mt-1 mb-1 rounded-lg overflow-y-auto ">
           <div>
-            <SearchBarInbox />
+            <SearchBarInbox
+              handleOnChanges={handleOnChangeSearch}
+              values={searchResult}
+            />
           </div>
           <div>
             {!loading ? (
@@ -65,82 +77,88 @@ export const QuickInbox = () => {
               </>
             ) : (
               <>
-                {messageList.map((messageData) => {
-                  return (
-                    <Link
-                      className="flex flex-col border-t-[1px] border-[#828282] first:border-0"
-                      key={messageData.id}
-                      href={{
-                        pathname: "/messages/" + messageData.id,
-                        query: {
-                          id: messageData.id,
-                          subject: messageData.tags[2],
-                          firstParticipantName: messageData.owner.lastName,
-                          secondParticipantName: messageData.owner.firstName,
-                          firstConversation: messageData.text,
-                          secondConversation: messageData.tags[1],
-                        },
-                      }}>
-                      <div className=" w-full">
-                        <div className="grid grid-cols-12 py-[22px] ">
-                          <div className="relative col-span-2 self-center">
-                            {messageData.image ? (
+                {messageList
+                  .filter((messageData) => {
+                    return searchResult.toLowerCase() === ""
+                      ? messageData
+                      : messageData.text.toLowerCase().includes(searchResult);
+                  })
+                  .map((messageData) => {
+                    return (
+                      <Link
+                        className="flex flex-col border-t-[1px] border-[#828282] first:border-0"
+                        key={messageData.id}
+                        href={{
+                          pathname: "/messages/" + messageData.id,
+                          query: {
+                            id: messageData.id,
+                            subject: messageData.tags[2],
+                            firstParticipantName: messageData.owner.lastName,
+                            secondParticipantName: messageData.owner.firstName,
+                            firstConversation: messageData.text,
+                            secondConversation: messageData.tags[1],
+                          },
+                        }}>
+                        <div className=" w-full">
+                          <div className="grid grid-cols-12 py-[22px] ">
+                            <div className="relative col-span-2 self-center">
+                              {messageData.image ? (
+                                <Image
+                                  src={messageData.image}
+                                  alt="search"
+                                  width={28}
+                                  height={28}
+                                  className="rounded-full h-8 w-8 absolute left-4"
+                                />
+                              ) : (
+                                <Image
+                                  src="/icons/person-white-icon.svg"
+                                  alt="search"
+                                  width={28}
+                                  height={28}
+                                  className="bg-[#2F80ED] rounded-full h-8 w-8 p-2 absolute left-4"
+                                />
+                              )}
                               <Image
-                                src={messageData.image}
+                                src="/icons/person-gray-icon.svg"
                                 alt="search"
                                 width={28}
                                 height={28}
-                                className="rounded-full h-8 w-8 absolute left-4"
+                                className="bg-[#E0E0E0] rounded-full h-8 w-8 p-2 "
                               />
-                            ) : (
+                            </div>
+                            <div className="col-span-4 w-full">
+                              <h1 className="text-base font-lato font-bold text-[#2F80ED]">
+                                {messageData.tags[2]}
+                              </h1>
+                              <h1 className="text-sm font-lato font-bold text-[#4F4F4F]">
+                                {messageData.owner.lastName}
+                              </h1>
+                              <h1 className="text-sm font-lato text-[#4F4F4F] text-ellipsis">
+                                {messageData.text}
+                              </h1>
+                            </div>
+                            <div className="col-span-5 w-full">
+                              <h1 className="text-base font-lato text-[#4F4F4F]">
+                                {moment()
+                                  .subtract(5, "hours")
+                                  .format("MM/DD/YYYY HH:mm")}
+                              </h1>
+                            </div>
+                            <div className="col-span-1 w-full self-center">
                               <Image
-                                src="/icons/person-white-icon.svg"
+                                src="/icons/notification-red-icon.svg"
                                 alt="search"
-                                width={28}
-                                height={28}
-                                className="bg-[#2F80ED] rounded-full h-8 w-8 p-2 absolute left-4"
+                                width={12}
+                                height={12}
+                                // className="bg-[#E0E0E0] rounded-full h-8 w-8 p-2 "
                               />
-                            )}
-                            <Image
-                              src="/icons/person-gray-icon.svg"
-                              alt="search"
-                              width={28}
-                              height={28}
-                              className="bg-[#E0E0E0] rounded-full h-8 w-8 p-2 "
-                            />
-                          </div>
-                          <div className="col-span-4 w-full">
-                            <h1 className="text-base font-lato font-bold text-[#2F80ED]">
-                              {messageData.tags[2]}
-                            </h1>
-                            <h1 className="text-sm font-lato font-bold text-[#4F4F4F]">
-                              {messageData.owner.lastName}
-                            </h1>
-                            <h1 className="text-sm font-lato text-[#4F4F4F] text-ellipsis">
-                              {messageData.text}
-                            </h1>
-                          </div>
-                          <div className="col-span-5 w-full">
-                            <h1 className="text-base font-lato text-[#4F4F4F]">
-                              {moment()
-                                .subtract(5, "hours")
-                                .format("MM/DD/YYYY HH:mm")}
-                            </h1>
-                          </div>
-                          <div className="col-span-1 w-full self-center">
-                            <Image
-                              src="/icons/notification-red-icon.svg"
-                              alt="search"
-                              width={12}
-                              height={12}
-                              // className="bg-[#E0E0E0] rounded-full h-8 w-8 p-2 "
-                            />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  );
-                })}
+                      </Link>
+                    );
+                  })}
               </>
             )}
           </div>

@@ -13,17 +13,20 @@ export default function DatePicker(props) {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   useEffect(() => {
-    props.setDate(selectDate.toDate().toLocaleDateString());
-  }, [selectDate.toDate().toLocaleDateString()]);
+    props.setDate(selectDate.format("MM/DD/YYYY"));
+  }, [selectDate.format("MM/DD/YYYY")]);
 
   return (
     <>
       <div className="flex justify-between rounded-lg items-center bg-white border-[1px] w-56 shadow-lg border-[#828282] h-10 px-2">
         <input
+          onClick={() => {
+            setShowDatePicker(!showDatePicker);
+          }}
           className="w-full bg-white text-[#4F4F4F] font-lato leading-tight focus:outline-none  py-2  "
           id="search"
           type="text"
-          value={selectDate.toDate().toLocaleDateString()}
+          value={selectDate.format("MM/DD/YYYY")}
           onChange={() => {
             console.log("date Changed");
           }}
@@ -45,7 +48,7 @@ export default function DatePicker(props) {
       {showDatePicker ? (
         <>
           <div className="relative">
-            <div className="absolute -right-40 top-2 bg-white z-40 w-72 h-[22rem] border-[1px] border-[#828282] ">
+            <div className="absolute -right-64  top-2 bg-white z-40 w-72 h-[22rem] border-[1px] border-[#828282] ">
               <div className="flex flex-row justify-between items-center p-4">
                 <div>
                   <button
@@ -107,13 +110,13 @@ export default function DatePicker(props) {
                               ? "text-[#4F4F4F] font-lato "
                               : "text-gray-400 ",
                             today
-                              ? "border border-[#2F80ED] font-lato text-black h-10 w-10 rounded-full"
+                              ? "border border-[#2F80ED] font-lato text-[#4f4f4f] h-10 w-10 rounded-full"
                               : "",
-                            selectDate.toDate().toDateString() ===
-                              date.toDate().toDateString()
-                              ? "bg-[#2F80ED] font-lato text-sm text-[#4F4F4F] h-10 w-10 rounded-full"
+                            selectDate.format("MM/DD/YYYY") ===
+                              date.format("MM/DD/YYYY")
+                              ? "bg-[#2F80ED] font-lato text-sm text-[#ffffff] h-10 w-10 rounded-full"
                               : "",
-                            "h-10 w-10 font-lato text-sm rounded-full grid place-content-center hover:bg-[#8cacd6] hover:text-white transition-all cursor-pointer select-none"
+                            "h-10 w-10 font-lato text-sm rounded-full grid place-content-center hover:bg-[#2F80ED] hover:text-white transition-all cursor-pointer select-none"
                           )}
                           onClick={() => {
                             setSelectDate(date);
